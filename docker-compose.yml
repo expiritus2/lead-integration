@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      LOG_LEVEL: ${LOG_LEVEL}
+      FRONTEND_BASE_URL: ${FRONTEND_BASE_URL}
+      PROVIDER_BASE_URL: ${PROVIDER_BASE_URL}
+    command: npm run start:dev
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+    command: npm run dev
+
