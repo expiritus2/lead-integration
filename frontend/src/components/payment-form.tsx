@@ -51,7 +51,7 @@ const PaymentForm = () => {
           <Box sx={{ mt: 2, mb: 2 }}>
             <RadioInput
               name="paymentMethod"
-              options={[{ value: 'S2S', label: 'S2S' }]}
+              options={[{ value: 's2s', label: 'S2S' }]}
               value={formik.values.paymentMethod}
               onChange={formik.handleChange}
             />
