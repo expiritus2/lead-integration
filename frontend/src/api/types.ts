@@ -5,12 +5,11 @@ export interface PurchaseData {
     email: string;
   },
   purchase: {
-    products: [
+    products:
       {
         name: string;
         price: number;
-      }
-    ]
+      }[]
   },
   brandId: string;
   successRedirect: string;

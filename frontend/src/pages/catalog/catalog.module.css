@@ -1,0 +1,12 @@
+.cart {
+    margin-left: auto;
+}
+
+.cartCount {
+    color: red;
+    background: #fff;
+    position: relative;
+    top: -5px;
+    left: 2px;
+    max-height: 10px;
+}

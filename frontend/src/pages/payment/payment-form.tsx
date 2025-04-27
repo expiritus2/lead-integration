@@ -12,6 +12,7 @@ import CreditCardInput from '../../components/inputs/input-mask.tsx';
 import BasicDateField from '../../components/inputs/expiration-date.tsx';
 import Button from '../../components/inputs/button.tsx';
 import { FC } from 'react';
+import useCartStore from '../../store/cart.ts';
 
 interface InitialValues {
   amount: number;
@@ -30,17 +31,20 @@ interface PaymentFormProps {
 
 const PaymentForm: FC<PaymentFormProps> = (props) => {
   const navigate = useNavigate();
-  const paymentStore = usePaymentStore((state) => state);
+  const paymentData = usePaymentStore((state) => state.paymentData);
+  const setPaymentData = usePaymentStore((state) => state.setPaymentData);
+  const resetPaymentData = usePaymentStore((state) => state.resetPaymentData);
+  const resetGoods = useCartStore((state) => state.resetGoods)
 
   const formik = useFormik<InitialValues>({
     initialValues: {
       amount: props.values.amount || 0,
       currency: props.values.currency || null,
-      paymentMethod: paymentStore.paymentData.paymentMethod || '',
-      cardNumber: paymentStore.paymentData.cardNumber || '',
-      cardholderName: paymentStore.paymentData.cardholderName || '',
-      expirationDate: paymentStore.paymentData.expirationDate || '',
-      securityCode: paymentStore.paymentData.securityCode || '',
+      paymentMethod: paymentData.paymentMethod || '',
+      cardNumber: paymentData.cardNumber || '',
+      cardholderName: paymentData.cardholderName || '',
+      expirationDate: paymentData.expirationDate || '',
+      securityCode: paymentData.securityCode || '',
     },
     validationSchema: PaymentSchema,
     onSubmit: async (values) => {
@@ -59,21 +63,19 @@ const PaymentForm: FC<PaymentFormProps> = (props) => {
 
         if (response.status === 'executed') {
           navigate('/success');
-          paymentStore.resetPaymentData();
+          resetPaymentData();
+          resetGoods();
         } else {
-          paymentStore.setPaymentData(payload)
+          setPaymentData(payload)
           navigate('/failure')
         }
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error: unknown) {
-        paymentStore.setPaymentData(payload)
+        setPaymentData(payload)
         navigate('/failure')
       }
     },
   });
-
-
-  console.log('formik.values.paymentMethod', formik.values.paymentMethod);
 
   return (
     <>
