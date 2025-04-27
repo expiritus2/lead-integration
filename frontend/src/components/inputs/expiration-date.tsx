@@ -74,7 +74,6 @@ const ExpirationDateInput: FC<ExpirationDateInputProps> = (props) => {
               },
               YY: {
                 mask: IMask.MaskedRange,
-                from: new Date().getFullYear() % 100,
                 to: 99,
                 maxLength: 2
               }

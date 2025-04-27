@@ -1,5 +1,4 @@
 import { AxiosError } from 'axios';
-import logger from '../logger/logger';
 import {
   BadRequestException,
   InternalServerErrorException,
