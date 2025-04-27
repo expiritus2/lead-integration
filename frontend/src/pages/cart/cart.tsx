@@ -35,7 +35,6 @@ const Cart = () => {
       setPurchase(response.purchase)
       navigate('/payment');
     } catch (error: unknown) {
-      console.log('this');
       setErrorMessage((error as Error).message || 'Something went wrong.');
     }
     setPending(false);
