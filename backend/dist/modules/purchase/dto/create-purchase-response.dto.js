@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PurchaseResponseDto = void 0;
+exports.GetPurchaseResponseDto = exports.CreatePurchaseResponseDto = void 0;
 const class_transformer_1 = require("class-transformer");
 let Purchase = class Purchase {
     currency;
@@ -26,21 +26,37 @@ __decorate([
 Purchase = __decorate([
     (0, class_transformer_1.Exclude)()
 ], Purchase);
-let PurchaseResponseDto = class PurchaseResponseDto {
-    direct_post_url;
-    purchase;
+let CreatePurchaseResponseDto = class CreatePurchaseResponseDto {
+    id;
 };
-exports.PurchaseResponseDto = PurchaseResponseDto;
+exports.CreatePurchaseResponseDto = CreatePurchaseResponseDto;
 __decorate([
     (0, class_transformer_1.Expose)(),
     __metadata("design:type", String)
-], PurchaseResponseDto.prototype, "direct_post_url", void 0);
+], CreatePurchaseResponseDto.prototype, "id", void 0);
+exports.CreatePurchaseResponseDto = CreatePurchaseResponseDto = __decorate([
+    (0, class_transformer_1.Exclude)()
+], CreatePurchaseResponseDto);
+let GetPurchaseResponseDto = class GetPurchaseResponseDto {
+    id;
+    direct_post_url;
+    purchase;
+};
+exports.GetPurchaseResponseDto = GetPurchaseResponseDto;
+__decorate([
+    (0, class_transformer_1.Expose)(),
+    __metadata("design:type", String)
+], GetPurchaseResponseDto.prototype, "id", void 0);
+__decorate([
+    (0, class_transformer_1.Expose)(),
+    __metadata("design:type", String)
+], GetPurchaseResponseDto.prototype, "direct_post_url", void 0);
 __decorate([
     (0, class_transformer_1.Expose)(),
     (0, class_transformer_1.Type)(() => Purchase),
     __metadata("design:type", Purchase)
-], PurchaseResponseDto.prototype, "purchase", void 0);
-exports.PurchaseResponseDto = PurchaseResponseDto = __decorate([
+], GetPurchaseResponseDto.prototype, "purchase", void 0);
+exports.GetPurchaseResponseDto = GetPurchaseResponseDto = __decorate([
     (0, class_transformer_1.Exclude)()
-], PurchaseResponseDto);
-//# sourceMappingURL=purchase-response.dto.js.map
+], GetPurchaseResponseDto);
+//# sourceMappingURL=create-purchase-response.dto.js.map

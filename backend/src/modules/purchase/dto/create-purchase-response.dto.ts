@@ -10,7 +10,16 @@ class Purchase {
 }
 
 @Exclude()
-export class PurchaseResponseDto {
+export class CreatePurchaseResponseDto {
+  @Expose()
+  id: string;
+}
+
+@Exclude()
+export class GetPurchaseResponseDto {
+  @Expose()
+  id: string;
+
   @Expose()
   direct_post_url: string;
 

@@ -1,39 +1,41 @@
-import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { PaymentSchema } from './validation.ts';
+import { pay } from '../../api/purchase.tsx';
+import CurrencyInput, { Currency } from '../../components/inputs/currency.tsx';
+import usePaymentStore from '../../store/payment.ts';
+import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
-import CurrencyInput from '../../components/inputs/currency.tsx';
+import Typography from '@mui/material/Typography';
 import TextField from '../../components/inputs/text.tsx';
 import RadioInput from '../../components/inputs/radio.tsx';
-import Button from '../../components/inputs/button.tsx';
 import CreditCardInput from '../../components/inputs/input-mask.tsx';
-import Typography from '@mui/material/Typography';
 import BasicDateField from '../../components/inputs/expiration-date.tsx';
-import { pay } from '../../api/purchase.tsx';
-import usePurchaseStore from '../../store/purchase.ts';
-import { PaymentSchema } from './validation.ts';
-import usePaymentStore from '../../store/payment.ts';
-import { useEffect } from 'react';
+import Button from '../../components/inputs/button.tsx';
+import { FC } from 'react';
 
-const PaymentForm = () => {
+interface InitialValues {
+  amount: number;
+  currency: Currency | null,
+  paymentMethod: string;
+  cardNumber: string;
+  cardholderName: string;
+  expirationDate: string;
+  securityCode: string;
+}
+
+interface PaymentFormProps {
+  values: Partial<InitialValues>;
+  directPostUrl: string;
+}
+
+const PaymentForm: FC<PaymentFormProps> = (props) => {
   const navigate = useNavigate();
   const paymentStore = usePaymentStore((state) => state);
-  const directPostUrl = usePurchaseStore((state) => state.directPostUrl);
-  const purchase = usePurchaseStore((state) => state.purchase);
 
-  useEffect(() => {
-    if (!purchase.total) {
-      navigate('/');
-    }
-  }, [purchase.total, navigate]);
-
-  if (!purchase.total) {
-    navigate('/');
-  }
-
-  const formik = useFormik({
+  const formik = useFormik<InitialValues>({
     initialValues: {
-      amount: purchase.total || 0,
-      currency: purchase.currency || null,
+      amount: props.values.amount || 0,
+      currency: props.values.currency || null,
       paymentMethod: paymentStore.paymentData.paymentMethod || '',
       cardNumber: paymentStore.paymentData.cardNumber || '',
       cardholderName: paymentStore.paymentData.cardholderName || '',
@@ -44,7 +46,7 @@ const PaymentForm = () => {
     onSubmit: async (values) => {
       values.cardNumber = values.cardNumber.replace(/ /g, '');
       const payload = {
-        directPostUrl,
+        directPostUrl: props.directPostUrl,
         cardNumber: values.cardNumber,
         cardholderName: values.cardholderName,
         expirationDate: values.expirationDate,
@@ -70,17 +72,11 @@ const PaymentForm = () => {
     },
   });
 
-  const isFormValid = formik.values.amount
-    && formik.values.currency
-    && formik.values.paymentMethod
-    && formik.values.cardholderName
-    && formik.values.expirationDate
-    && formik.values.securityCode
-    && formik.values.securityCode;
+
+  console.log('formik.values.paymentMethod', formik.values.paymentMethod);
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-      <Box sx={{ m: 4, width: '600px' }}>
+    <>
         <Box display="flex" justifyContent="center" sx={{ marginBottom: 2 }}>
           <Typography variant="h4" gutterBottom>Payment Form</Typography>
         </Box>
@@ -89,7 +85,7 @@ const PaymentForm = () => {
             <Box sx={{ width: '100%' }}>
               <TextField
                 error={!!formik.errors.amount}
-                disabled={!!purchase.total}
+                disabled={!!formik.values.amount}
                 sx={{ width: '100%' }}
                 type="number"
                 label="Amount"
@@ -101,7 +97,7 @@ const PaymentForm = () => {
             </Box>
             <Box>
               <CurrencyInput
-                disabled={!!purchase.currency}
+                disabled={!!formik.values.currency}
                 name="currency"
                 label="Currency"
                 value={formik.values.currency}
@@ -156,12 +152,11 @@ const PaymentForm = () => {
             />
           </Box>
           <Box sx={{ marginTop: 2 }}>
-            <Button disabled={!!Object.keys(formik.errors).length || !isFormValid} type="submit" variant="contained">Submit</Button>
+            <Button disabled={!!Object.keys(formik.errors).length || !formik.isValid} type="submit" variant="contained">Submit</Button>
           </Box>
         </form>
-      </Box>
-    </Box>
-  )
+    </>
+  );
 };
 
 export default PaymentForm;

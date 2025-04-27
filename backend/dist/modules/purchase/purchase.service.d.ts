@@ -1,5 +1,6 @@
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
-import { PurchaseResponseDto } from './dto/purchase-response.dto';
+import { CreatePurchaseResponseDto, GetPurchaseResponseDto } from './dto/create-purchase-response.dto';
 export declare class PurchaseService {
-    purchase(createPurchaseDto: CreatePurchaseDto): Promise<PurchaseResponseDto>;
+    createPurchase(createPurchaseDto: CreatePurchaseDto): Promise<CreatePurchaseResponseDto>;
+    getPurchase(id: string): Promise<GetPurchaseResponseDto>;
 }

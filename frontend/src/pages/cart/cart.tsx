@@ -6,14 +6,11 @@ import Button from '../../components/inputs/button';
 import styles from './cart.module.css';
 import { useCallback } from 'react';
 import { purchase } from '../../api/purchase.tsx';
-import usePurchaseStore from '../../store/purchase.ts';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const [errorMessage, setErrorMessage] = useState<string>();
   const [pending, setPending] = useState(false);
-  const setDirectPostUrl = usePurchaseStore((state) => state.setDirectPostUrl);
-  const setPurchase = usePurchaseStore((state) => state.setPurchase);
   const navigate = useNavigate();
 
   const onPurchase = useCallback(async () => {
@@ -31,14 +28,12 @@ const Cart = () => {
         failureRedirect: 'https://localhost:4000'
       });
 
-      setDirectPostUrl(response.directPostUrl);
-      setPurchase(response.purchase)
-      navigate('/payment');
+      navigate(`/payment/${response.purchaseId}`);
     } catch (error: unknown) {
       setErrorMessage((error as Error).message || 'Something went wrong.');
     }
     setPending(false);
-  }, [navigate, setDirectPostUrl, setPurchase]);
+  }, [navigate]);
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>

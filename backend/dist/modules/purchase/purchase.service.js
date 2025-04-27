@@ -9,11 +9,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PurchaseService = void 0;
 const common_1 = require("@nestjs/common");
 const provider_api_1 = require("../../api/provider-api");
-const purchase_response_dto_1 = require("./dto/purchase-response.dto");
+const create_purchase_response_dto_1 = require("./dto/create-purchase-response.dto");
 const class_transformer_1 = require("class-transformer");
 const error_1 = require("../../utils/error");
 let PurchaseService = class PurchaseService {
-    async purchase(createPurchaseDto) {
+    async createPurchase(createPurchaseDto) {
         try {
             const result = await provider_api_1.providerApi.post('/purchases/', {
                 client: createPurchaseDto.client,
@@ -22,7 +22,17 @@ let PurchaseService = class PurchaseService {
                 success_redirect: createPurchaseDto.successRedirect,
                 failure_redirect: createPurchaseDto.failureRedirect,
             });
-            return (0, class_transformer_1.plainToInstance)(purchase_response_dto_1.PurchaseResponseDto, result.data);
+            return (0, class_transformer_1.plainToInstance)(create_purchase_response_dto_1.CreatePurchaseResponseDto, result.data);
+        }
+        catch (error) {
+            (0, error_1.handleError)(error);
+            throw new common_1.InternalServerErrorException('Unknown error. Please try again later.');
+        }
+    }
+    async getPurchase(id) {
+        try {
+            const result = await provider_api_1.providerApi.get(`/purchases/${id}/`);
+            return (0, class_transformer_1.plainToInstance)(create_purchase_response_dto_1.GetPurchaseResponseDto, result.data);
         }
         catch (error) {
             (0, error_1.handleError)(error);

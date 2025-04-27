@@ -21,8 +21,11 @@ let PurchaseController = class PurchaseController {
     constructor(purchaseService) {
         this.purchaseService = purchaseService;
     }
-    async purchase(createPurchaseDto) {
-        return this.purchaseService.purchase(createPurchaseDto);
+    async createPurchase(createPurchaseDto) {
+        return this.purchaseService.createPurchase(createPurchaseDto);
+    }
+    async getPurchase(params) {
+        return this.purchaseService.getPurchase(params.id);
     }
 };
 exports.PurchaseController = PurchaseController;
@@ -32,7 +35,14 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_purchase_dto_1.CreatePurchaseDto]),
     __metadata("design:returntype", Promise)
-], PurchaseController.prototype, "purchase", null);
+], PurchaseController.prototype, "createPurchase", null);
+__decorate([
+    (0, common_1.Get)('/:id'),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], PurchaseController.prototype, "getPurchase", null);
 exports.PurchaseController = PurchaseController = __decorate([
     (0, common_1.Controller)('purchase'),
     __metadata("design:paramtypes", [purchase_service_1.PurchaseService])

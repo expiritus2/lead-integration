@@ -12,31 +12,31 @@ export const providerApi = axios.create({
   },
 });
 
-providerApi.interceptors.request.use((config) => {
-  const cleanHeaders = cleanSensitiveData(config.headers);
-
-  logger.log(
-    `Provider Request: ${config.method} ${config.url} - Body: ${JSON.stringify(config.data)} - Headers: ${JSON.stringify(cleanHeaders)}`,
-  );
-  return config;
-});
-
-providerApi.interceptors.response.use(
-  (response) => {
-    logger.log(
-      `Provider Response: ${response.status} - Body: ${JSON.stringify(response.data)}`,
-    );
-    return response;
-  },
-  (error) => {
-    const axiosError = error as AxiosError;
-    const cleanHeaders = cleanSensitiveData(axiosError.config?.headers || {});
-    logger.error(
-      `Provider Response Error: ${axiosError.config?.method} ${axiosError.config?.url} - Body: ${JSON.stringify(axiosError.config?.data)} - Headers: ${JSON.stringify(cleanHeaders)}`,
-    );
-    throw error;
-  },
-);
+// providerApi.interceptors.request.use((config) => {
+//   const cleanHeaders = cleanSensitiveData(config.headers);
+//
+//   logger.log(
+//     `Provider Request: ${config.method} ${config.url} - Body: ${JSON.stringify(config.data)} - Headers: ${JSON.stringify(cleanHeaders)}`,
+//   );
+//   return config;
+// });
+//
+// providerApi.interceptors.response.use(
+//   (response) => {
+//     logger.log(
+//       `Provider Response: ${response.status} - Body: ${JSON.stringify(response.data)}`,
+//     );
+//     return response;
+//   },
+//   (error) => {
+//     const axiosError = error as AxiosError;
+//     const cleanHeaders = cleanSensitiveData(axiosError.config?.headers || {});
+//     logger.error(
+//       `Provider Response Error: ${axiosError.config?.method} ${axiosError.config?.url} - Body: ${JSON.stringify(axiosError.config?.data)} - Headers: ${JSON.stringify(cleanHeaders)}`,
+//     );
+//     throw error;
+//   },
+// );
 
 export const providerS2SApi = axios.create({
   headers: {
