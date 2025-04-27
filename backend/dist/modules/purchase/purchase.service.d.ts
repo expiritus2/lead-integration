@@ -1,5 +1,5 @@
-import { PurchaseDto } from './dto/purchase.dto';
-import { PurchaseProviderResponse } from './purchase.types';
+import { CreatePurchaseDto } from './dto/create-purchase.dto';
+import { PurchaseResponseDto } from './dto/purchase-response.dto';
 export declare class PurchaseService {
-    purchase(purchaseDto: PurchaseDto): PurchaseProviderResponse;
+    purchase(createPurchaseDto: CreatePurchaseDto): Promise<PurchaseResponseDto>;
 }

@@ -35,4 +35,5 @@ exports.WinstonLogger = WinstonLogger;
 exports.WinstonLogger = WinstonLogger = __decorate([
     (0, common_1.Injectable)()
 ], WinstonLogger);
-//# sourceMappingURL=winston-logger.js.map
+exports.default = new WinstonLogger();
+//# sourceMappingURL=logger.js.map

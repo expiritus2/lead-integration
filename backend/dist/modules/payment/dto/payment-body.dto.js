@@ -9,40 +9,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PurchaseDto = void 0;
+exports.PaymentBodyDto = exports.PaymentMethod = void 0;
 const class_validator_1 = require("class-validator");
-class PurchaseDto {
-    amount;
-    currency;
+var PaymentMethod;
+(function (PaymentMethod) {
+    PaymentMethod["S2S"] = "s2s";
+})(PaymentMethod || (exports.PaymentMethod = PaymentMethod = {}));
+class PaymentBodyDto {
+    directPostUrl;
     paymentMethod;
+    cardholderName;
     cardNumber;
     expirationDate;
     securityCode;
 }
-exports.PurchaseDto = PurchaseDto;
-__decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], PurchaseDto.prototype, "amount", void 0);
+exports.PaymentBodyDto = PaymentBodyDto;
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], PurchaseDto.prototype, "currency", void 0);
+], PaymentBodyDto.prototype, "directPostUrl", void 0);
+__decorate([
+    (0, class_validator_1.IsEnum)(PaymentMethod),
+    __metadata("design:type", String)
+], PaymentBodyDto.prototype, "paymentMethod", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], PurchaseDto.prototype, "paymentMethod", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.Length)(16, 16),
-    __metadata("design:type", String)
-], PurchaseDto.prototype, "cardNumber", void 0);
+], PaymentBodyDto.prototype, "cardholderName", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], PurchaseDto.prototype, "expirationDate", void 0);
+], PaymentBodyDto.prototype, "cardNumber", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], PurchaseDto.prototype, "securityCode", void 0);
-//# sourceMappingURL=purchase.dto.js.map
+], PaymentBodyDto.prototype, "expirationDate", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], PaymentBodyDto.prototype, "securityCode", void 0);
+//# sourceMappingURL=payment-body.dto.js.map

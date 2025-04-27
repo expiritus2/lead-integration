@@ -1,15 +1,21 @@
-import { Module, MiddlewareConsumer } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { PurchaseModule } from './modules/purchase/purchase.module';
 import { ConfigModule } from '@nestjs/config';
-import Logger from './logger/logger';
-import { LoggerMiddleware } from './middlewares/logger-middleware';
+import { PaymentModule } from './modules/payment/payment.module';
+import { LoggingInterceptor } from './interceptors/logging.interceptor';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), PurchaseModule],
-  providers: [Logger],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    PurchaseModule,
+    PaymentModule,
+  ],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
+  ],
 })
-export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes('*');
-  }
-}
+export class AppModule {}

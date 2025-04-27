@@ -1,10 +1,8 @@
 import { PurchaseService } from './purchase.service';
-import Logger from '../../logger/logger';
-import { PurchaseDto } from './dto/purchase.dto';
-import { PurchaseProviderResponse } from './purchase.types';
+import { PurchaseResponseDto } from './dto/purchase-response.dto';
+import { CreatePurchaseDto } from './dto/create-purchase.dto';
 export declare class PurchaseController {
     private readonly purchaseService;
-    private readonly logger;
-    constructor(purchaseService: PurchaseService, logger: Logger);
-    purchase(purchaseDto: PurchaseDto): PurchaseProviderResponse;
+    constructor(purchaseService: PurchaseService);
+    purchase(createPurchaseDto: CreatePurchaseDto): Promise<PurchaseResponseDto>;
 }
