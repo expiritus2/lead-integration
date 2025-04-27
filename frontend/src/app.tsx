@@ -1,12 +1,17 @@
-import PaymentForm from './components/payment-form';
+import PaymentForm from './pages/payment-form/payment-form.tsx';
+import Cart from './pages/cart/cart.tsx';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Success from './pages/success/success.tsx';
+import Failure from './pages/failure/failure.tsx';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PaymentForm />} />
-        <Route path="/success" element={<div>Success!</div>} />
+        <Route path="/" element={<Cart />} />
+        <Route path="/payment" element={<PaymentForm />} />
+        <Route path="/success" element={<Success />} />
+        <Route path="/failure" element={<Failure />} />
       </Routes>
     </BrowserRouter>
   )

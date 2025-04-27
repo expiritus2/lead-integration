@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, memo } from 'react'
 
 import MaterialButton, { ButtonProps } from '@mui/material/Button';
 
@@ -8,4 +8,4 @@ const Button: FC<ButtonProps> = (props) => {
   );
 };
 
-export default Button;
+export default memo(Button);

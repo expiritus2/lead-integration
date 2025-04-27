@@ -18,22 +18,24 @@ export enum Currency {
 
 interface CurrencySelectProps {
   name: string;
-  value: Currency;
+  value: Currency | null;
   onChange: (event: SelectChangeEvent<Currency>, child: React.ReactNode) => void;
   label: string;
+  disabled?: boolean;
 }
 
 const CurrencySelect: FC<CurrencySelectProps> = (props) => {
-  const { name, value, onChange, label } = props;
+  const { name, value, onChange, label, disabled } = props;
 
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
         <InputLabel id="currency-select-label">{label}</InputLabel>
         <Select
+          disabled={disabled}
           name={name}
           labelId="currency-select-label"
-          value={value}
+          value={value || ''}
           label={label}
           onChange={onChange}
         >
