@@ -11,6 +11,8 @@ services:
       LOG_LEVEL: ${LOG_LEVEL}
       FRONTEND_BASE_URL: ${FRONTEND_BASE_URL}
       PROVIDER_BASE_URL: ${PROVIDER_BASE_URL}
+      PROVIDER_API_KEY: ${PROVIDER_API_KEY}
+      PROVIDER_S2S_TOKEN: ${PROVIDER_S2S_TOKEN}
     command: npm run start:dev
 
   frontend:
