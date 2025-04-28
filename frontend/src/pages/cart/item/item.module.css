@@ -6,3 +6,10 @@
     width: 200px;
     height: 200px;
 }
+
+.close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}

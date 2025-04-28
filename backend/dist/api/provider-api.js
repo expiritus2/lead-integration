@@ -13,6 +13,20 @@ exports.providerApi = axios_1.default.create({
         Authorization: `Bearer ${process.env.PROVIDER_API_KEY}`,
     },
 });
+exports.providerApi.interceptors.request.use((config) => {
+    const cleanHeaders = (0, data_1.cleanSensitiveData)(config.headers);
+    logger_1.default.log(`Provider Request: ${config.method} ${config.url} - Body: ${JSON.stringify(config.data)} - Headers: ${JSON.stringify(cleanHeaders)}`);
+    return config;
+});
+exports.providerApi.interceptors.response.use((response) => {
+    logger_1.default.log(`Provider Response: ${response.status} - Body: ${JSON.stringify(response.data)}`);
+    return response;
+}, (error) => {
+    const axiosError = error;
+    const cleanHeaders = (0, data_1.cleanSensitiveData)(axiosError.config?.headers || {});
+    logger_1.default.error(`Provider Response Error: ${axiosError.config?.method} ${axiosError.config?.url} - Body: ${JSON.stringify(axiosError.config?.data)} - Headers: ${JSON.stringify(cleanHeaders)}`);
+    throw error;
+});
 exports.providerS2SApi = axios_1.default.create({
     headers: {
         'Content-Type': 'application/json',

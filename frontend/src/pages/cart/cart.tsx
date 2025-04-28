@@ -47,7 +47,7 @@ const Cart = () => {
       <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
         <Box sx={{ m: 4, width: '600px' }}>
           {goods.map((item) => (
-            <Item key={item.id} price={item.price} image={item.image} description={item.description} />
+            <Item key={item.id} id={item.id} price={item.price} image={item.image} description={item.description} />
           ))}
           {goods.length ? <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button onClick={onPurchase} sx={{ m: 4 }} type="button" variant="contained">
